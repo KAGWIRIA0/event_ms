@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Booked Events</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2 class="mb-3">Booked Events</h2>
+
+        <!-- Display success message -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Event Name</th>
+                    <th>Client</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in booked_events %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ event.name }}</td>
+                        <td>{{ event.client }}</td>
+                        <td>{{ event.date }}</td>
+                        <td>{{ event.status }}</td>
+                        <td>
+                            <form action="{% url 'cancel_event' event.id %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-danger btn-sm">Cancel</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

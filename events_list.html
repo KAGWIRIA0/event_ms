@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Events{% endblock %}
+{% block extra_css %}
+	<!-- Custom styles for this page -->
+    <link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+{#<ul>#}
+{#    {% for event in events %}#}
+{#        <li><a href="{% url 'event_detail' event.id %}">{{ event.name }}</a></li>#}
+{#    {% endfor %}#}
+{#</ul>#}
+     <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">Events</h1>
+                    <p class="mb-4">Booked Events</p>
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">All Booked Events</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Event Name</th>
+                                            <th>Client</th>
+                                            <th>Number Of Guests</th>
+                                            <th>Event Date</th>
+                                            <th>Status</th>
+                                            <th>Cost</th>
+                                            <th>Approve Event</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Event Name</th>
+                                            <th>Client</th>
+                                            <th>Number Of Guests</th>
+                                            <th>Date</th>
+                                            <th>Status</th>
+                                            <th>Cost</th>
+                                            <th>Approve Event</th>
+                                           
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        {% for event in events %}
+                                          <tr>
+                                              <td>{{ event.event_name }}</td>
+                                              <td>{{ event.client }}</td>
+                                              <td>{{ event.number_of_guests }}</td>
+                                              <td>{{ event.date | date:"d-m-Y"}}</td>
+                                              <td>{{ event.status }}</td>
+                                              <td>{{ event.cost }}</td>
+                                              <td>
+                                                  <a href="{% url 'approve_event' event.id  %}" class="btn btn-outline-dark btn-sm">Approve</a>
+                                              </td>
+                                          </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <!-- Page level plugins -->
+    <script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="{% static 'js/demo/datatables-demo.js' %}"></script>
+{% endblock %}
